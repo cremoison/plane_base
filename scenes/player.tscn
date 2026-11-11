@@ -117,13 +117,18 @@ angular_damp_mode = 1
 angular_damp = 2.0
 script = ExtResource("1_g2els")
 thrust = 0.0
+base_thrust = null
 max_thrust = 191000.0
 air_density = 0.5
 _mass = 850.0
 use_substep_prediction = null
 
-[node name="Controller" type="Node" parent="." unique_id=1039497028]
+[node name="Controller" type="Node" parent="." unique_id=1039497028 node_paths=PackedStringArray("aircraft_physics", "pitch_surfaces", "roll_surfaces", "yaw_surfaces")]
 script = ExtResource("5_qlg0r")
+aircraft_physics = NodePath("..")
+pitch_surfaces = [NodePath("../AeroSurfaces/HTail")]
+roll_surfaces = [NodePath("../AeroSurfaces/Wing/RightAileron"), NodePath("../AeroSurfaces/Wing/LeftAileron")]
+yaw_surfaces = [NodePath("../AeroSurfaces/VTail")]
 
 [node name="CameraController" type="Node3D" parent="." unique_id=1767656859 node_paths=PackedStringArray("aircraft", "speed_lines", "cameras")]
 script = ExtResource("3_fjrip")

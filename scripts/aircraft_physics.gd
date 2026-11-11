@@ -2,7 +2,8 @@
 extends RigidBody3D
 class_name AircraftPhysics
 
-@export var thrust : float = 3000.0 # N
+@export var thrust : float = 30000.0 # N
+@export var base_thrust : float = 30000.0 # N, spinta a cui il throttle torna a riposo (usata da AircraftController)
 @export var max_thrust : float = 50000.0 # N
 @export var air_density : float = 1.225 # kg/m^3
 @export var is_engine_on : bool = true
