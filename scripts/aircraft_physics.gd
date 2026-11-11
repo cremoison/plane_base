@@ -103,17 +103,29 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if Engine.is_editor_hint():
 		return
 
-	if is_engine_on:
-		state.apply_central_force(forward_dir * thrust)
+	var thrust_force : Vector3 = forward_dir * thrust if is_engine_on else Vector3.ZERO
 
-	for surface in aero_surfaces:
-		var origin_offset = surface.global_position - global_position
-		var point_velocity = state.linear_velocity + state.angular_velocity.cross(origin_offset) - environment_wind
+	# Forze aerodinamiche allo stato attuale
+	var aero_now := _calculate_aero(state, state.linear_velocity, state.angular_velocity)
+	var aero_force : Vector3 = aero_now.force
+	var aero_torque : Vector3 = aero_now.torque
 
-		var aero_data = surface.calculate_forces(point_velocity, air_density)
+	if use_substep_prediction:
+		# Substep: predico velocita' lineare e angolare a fine step...
+		var dt := state.step
+		var predicted_lin_vel : Vector3 = state.linear_velocity \
+			+ (aero_force + thrust_force) * state.inverse_mass * dt \
+			+ state.total_gravity * dt
+		var predicted_ang_vel : Vector3 = state.angular_velocity \
+			+ state.inverse_inertia_tensor * aero_torque * dt
 
-		if aero_data.force.length_squared() > 0.01:
-			state.apply_force(aero_data.force, origin_offset)
+		# ...ricalcolo le forze nello stato predetto e faccio la media
+		var aero_pred := _calculate_aero(state, predicted_lin_vel, predicted_ang_vel)
+		aero_force = (aero_now.force + aero_pred.force) * 0.5
+		aero_torque = (aero_now.torque + aero_pred.torque) * 0.5
+
+	state.apply_central_force(thrust_force + aero_force)
+	state.apply_torque(aero_torque)
 
 	var current_velocity = state.linear_velocity
 	var speed = current_velocity.length()
@@ -132,6 +144,30 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 	if is_airbrake_deployed:
 		state.linear_velocity = state.linear_velocity.lerp(Vector3.ZERO, airbrake_strength * state.step)
+
+## Se attivo, le forze aerodinamiche sono la media tra quelle allo stato attuale
+## e quelle calcolate sullo stato predetto a fine step (substep di predizione).
+@export var use_substep_prediction : bool = true
+
+# Somma forza e momento (rispetto al centro di massa) di tutte le superfici,
+# per una data velocita' lineare (del COM) e angolare.
+func _calculate_aero(state: PhysicsDirectBodyState3D, lin_vel: Vector3, ang_vel: Vector3) -> Dictionary:
+	var total_force := Vector3.ZERO
+	var total_torque := Vector3.ZERO
+	var com_offset := state.center_of_mass # offset del COM dall'origine, in coordinate globali
+
+	for surface in aero_surfaces:
+		var r := (surface.global_position - global_position) - com_offset
+		var point_velocity := lin_vel + ang_vel.cross(r) - environment_wind
+
+		var aero_data = surface.calculate_forces(point_velocity, air_density)
+		var f : Vector3 = aero_data.force
+
+		if f.length_squared() > 0.01:
+			total_force += f
+			total_torque += r.cross(f)
+
+	return {"force": total_force, "torque": total_torque}
 
 func trigger_warning(message: String) -> void:
 	warning_triggered.emit(message)

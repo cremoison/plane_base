@@ -6,6 +6,8 @@ class_name AircraftController
 @export var roll_surfaces: Array[AeroSurface]   # ali
 @export var yaw_surfaces: Array[AeroSurface]    # timone
 
+@export var throttle_step : float = 50000
+
 @export var max_deflection: float = 40.0 # maximum flap rotation degrees
 
 func _process(delta):
@@ -29,14 +31,17 @@ func _process(delta):
 		surface.set_flap_angle(yaw_input * current_deflection)
 
 	if Input.is_action_pressed("throttle_up"):
-		aircraft_physics.thrust += 5000 * delta
-	if Input.is_action_pressed("throttle_down"):
-		aircraft_physics.thrust -= 5000 * delta
-
+		aircraft_physics.thrust += throttle_step * delta
+	elif Input.is_action_pressed("throttle_down"):
+		aircraft_physics.thrust -= throttle_step * delta
+	else : 
+		if aircraft_physics.thrust < aircraft_physics.base_thrust:
+			aircraft_physics.thrust+=throttle_step/2*delta
+		if aircraft_physics.thrust > aircraft_physics.base_thrust:
+			aircraft_physics.thrust-=throttle_step/2*delta
 	aircraft_physics.thrust = clamp(aircraft_physics.thrust, 0.0, aircraft_physics.max_thrust) # 15000.0 is max_thrust
 	
 	if Input.is_action_pressed("airbrake"):
 		aircraft_physics.is_airbrake_deployed = true
 	else: 
 		aircraft_physics.is_airbrake_deployed = false
-

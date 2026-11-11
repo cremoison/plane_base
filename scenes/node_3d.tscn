@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cj6fxs4w0tp0m"]
+[gd_scene format=3 uid="uid://bbfm62x8slutl"]
 
 [ext_resource type="Texture2D" uid="uid://bcdh3finomvm" path="res://assets/sky_34_2k.png" id="1_noarx"]
 [ext_resource type="PackedScene" uid="uid://cjobk7w7dglh0" path="res://scenes/player.tscn" id="2_r3fl7"]

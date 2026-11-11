@@ -6,7 +6,6 @@ signal ui_shown
 signal ui_hidden
 
 # Valori di riferimento usati per i calcoli della UI
-@export var max_thrust: float = 15000.0 # Deve combaciare con il max_thrust del Controller
 @export var stall_speed_ms: float = 25.0 # Circa 48 nodi. Velocità sotto la quale scatta l'allarme
 
 @onready var label_warning : Label = $label_warning
@@ -47,17 +46,20 @@ func _process(_delta: float) -> void:
 	# Cache delle variabili fisiche attuali
 	var vel = aircraft.linear_velocity
 	var pos = aircraft.global_position
-	var current_throttle = aircraft.thrust / max_thrust
+	var current_throttle = aircraft.thrust / aircraft.max_thrust
 	var air_velocity = vel - aircraft.environment_wind
 	var ground_velocity = Vector3(vel.x, 0.0, vel.z)
+	var thrust = aircraft.thrust
 
 	# Nodo label_debug
 	var debug_label = $label_debug as Label
-	var info = "fps: %d\nposition: %s\nvelocity: %sm/s\nthrottle: %d%%\n" % [
+	var info = "fps: %d\nposition: %s\nvelocity: %sm/s\nthrottle: %d%%\nthrust: %dN\n" % [
 		Engine.get_frames_per_second(), 
 		pos, 
 		vel, 
-		int(current_throttle * 100.0)
+		int(current_throttle * 100.0),
+		thrust
+		
 	]
 	debug_label.text = info
 

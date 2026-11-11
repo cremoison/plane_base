@@ -1,0 +1,9 @@
+res://scenes/player.tscn
+res://shaders/ocean.gdshader
+res://assets/grass_shader/src/shader/grass.gdshader
+res://test.tscn
+res://assets/sky_env.tres
+res://scripts/aircraft_physics.gd
+res://scripts/player_ui.gd
+res://player.gd
+res://scripts/aircraft_controller.gd

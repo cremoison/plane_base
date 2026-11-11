@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bqqpqjaw2ip33"]
+
+[ext_resource type="PackedScene" uid="uid://cjobk7w7dglh0" path="res://scenes/player.tscn" id="1_37kl0"]
+[ext_resource type="Environment" uid="uid://bgj81dw0qoghi" path="res://assets/sky_env.tres" id="2_8uh7m"]
+
+[node name="Node3D" type="Node3D" unique_id=1164751421]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1206926505]
+environment = ExtResource("2_8uh7m")
+
+[node name="Player" parent="." unique_id=740888521 instance=ExtResource("1_37kl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4525137, 0, -0.6425123)
+thrust = 50000.0
+use_substep_prediction = true

@@ -1,0 +1,333 @@
+[gd_scene format=3 uid="uid://cjobk7w7dglh0"]
+
+[ext_resource type="Script" uid="uid://dkebb0xjxb8ml" path="res://scripts/aircraft_physics.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://pbs8h56efvxk" path="res://scripts/aircraft_camera.gd" id="3_fjrip"]
+[ext_resource type="Script" uid="uid://d2xlkwvcfa1mq" path="res://scripts/aerosurface.gd" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://bnb3pyn5767bh" path="res://scripts/player_ui.gd" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://dmg88x62eyymd" path="res://scripts/aerosurface_config.gd" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://c2820qp15mhfs" path="res://scripts/aircraft_controller.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://b3hwqxljt7gtw" path="res://scripts/waypoint_marker.gd" id="5_smehm"]
+[ext_resource type="ArrayMesh" uid="uid://t132ik4eu1x4" path="res://assets/city-kit/OBJ format/low-detail-building-i.obj" id="6_smehm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fjrip"]
+friction = 0.2
+
+[sub_resource type="LabelSettings" id="LabelSettings_hqtel"]
+line_spacing = -5.0
+font_color = Color(1, 1, 0, 1)
+outline_size = 5
+outline_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qhqgy"]
+line_spacing = -5.0
+font_color = Color(1, 0, 0, 1)
+outline_size = 5
+outline_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fjrip"]
+line_spacing = -5.0
+font_color = Color(0, 1, 1, 1)
+outline_size = 5
+outline_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_smehm"]
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xaub4"]
+size = Vector3(0.29858398, 0.25842285, 1.9786377)
+
+[sub_resource type="Curve" id="Curve_e80qk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5073314, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_s2a2n"]
+curve = SubResource("Curve_e80qk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ijnfp"]
+emission_shape_offset = Vector3(0, 0, -10)
+emission_shape_scale = Vector3(10, 5, 10)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 29.029999
+initial_velocity_max = 126.659996
+scale_curve = SubResource("CurveTexture_s2a2n")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xaub4"]
+shading_mode = 0
+albedo_color = Color(0.8901961, 1, 1, 0.41960785)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pvgat"]
+material = SubResource("StandardMaterial3D_xaub4")
+size = Vector3(0.05, 0.05, 3)
+
+[sub_resource type="Resource" id="Resource_s2a2n"]
+script = ExtResource("4_dqkch")
+chord = 1.03
+span = 1.865
+flap_fraction = 0.0
+stall_angle_high = 0.436
+stall_angle_low = -0.436
+metadata/_custom_type_script = "uid://dmg88x62eyymd"
+
+[sub_resource type="Resource" id="Resource_c57nm"]
+script = ExtResource("4_dqkch")
+chord = 0.775
+span = 0.745
+flap_fraction = 0.0
+metadata/_custom_type_script = "uid://dmg88x62eyymd"
+
+[sub_resource type="Resource" id="Resource_ouh8m"]
+script = ExtResource("4_dqkch")
+chord = 0.865
+span = 1.645
+flap_fraction = 0.305
+metadata/_custom_type_script = "uid://dmg88x62eyymd"
+
+[sub_resource type="Resource" id="Resource_y04i4"]
+script = ExtResource("4_dqkch")
+chord = 3.165
+span = 0.615
+flap_fraction = 0.0
+metadata/_custom_type_script = "uid://dmg88x62eyymd"
+
+[sub_resource type="Resource" id="Resource_nid35"]
+script = ExtResource("4_dqkch")
+flap_fraction = 0.5
+metadata/_custom_type_script = "uid://dmg88x62eyymd"
+
+[sub_resource type="Resource" id="Resource_4w144"]
+script = ExtResource("4_dqkch")
+chord = 0.62
+span = 2.745
+flap_fraction = 0.5
+metadata/_custom_type_script = "uid://dmg88x62eyymd"
+
+[node name="Player" type="RigidBody3D" unique_id=740888521]
+mass = 850.0
+physics_material_override = SubResource("PhysicsMaterial_fjrip")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 0.3, -0.15)
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 4
+linear_velocity = Vector3(0, 0, -50)
+angular_damp_mode = 1
+angular_damp = 2.0
+script = ExtResource("1_g2els")
+thrust = 0.0
+max_thrust = 191000.0
+air_density = 0.5
+_mass = 850.0
+use_substep_prediction = null
+
+[node name="Controller" type="Node" parent="." unique_id=1039497028]
+script = ExtResource("5_qlg0r")
+
+[node name="CameraController" type="Node3D" parent="." unique_id=1767656859 node_paths=PackedStringArray("aircraft", "speed_lines", "cameras")]
+script = ExtResource("3_fjrip")
+aircraft = NodePath("..")
+speed_lines = NodePath("../SpeedLines")
+cameras = [NodePath("CameraFP"), NodePath("CameraTP")]
+
+[node name="CameraFP" type="Camera3D" parent="CameraController" unique_id=26512206]
+transform = Transform3D(1, 0, 0, 0, 0.9972123, 0.07461661, 0, -0.07461661, 0.9972123, -0.00030511786, 0.5403869, -1.9444289)
+
+[node name="CameraTP" type="Camera3D" parent="CameraController" unique_id=1129964315]
+transform = Transform3D(1, 0, 0, 0, 0.99970037, 0.024476793, 0, -0.024476793, 0.9997004, -0.00030511786, 2.0390298, 8.823778)
+fov = 54.276134
+
+[node name="HUD" type="Control" parent="." unique_id=1561056944 node_paths=PackedStringArray("aircraft")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_tuyoq")
+aircraft = NodePath("..")
+
+[node name="label_debug" type="Label" parent="HUD" unique_id=60264967]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 15.0
+offset_right = 65.0
+offset_bottom = 38.0
+text = "debug"
+label_settings = SubResource("LabelSettings_hqtel")
+
+[node name="label_stall" type="Label" parent="HUD" unique_id=1507550329]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 384.0
+offset_bottom = 448.0
+grow_horizontal = 2
+text = "STALL"
+label_settings = SubResource("LabelSettings_qhqgy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="label_warning" type="Label" parent="HUD" unique_id=709557842]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 88.0
+offset_bottom = 152.0
+grow_horizontal = 2
+text = "WARNING"
+label_settings = SubResource("LabelSettings_fjrip")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="label_tas" type="Label" parent="HUD" unique_id=970623239]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 327.0
+offset_right = 460.0
+offset_bottom = 350.0
+text = "TAS"
+label_settings = SubResource("LabelSettings_hqtel")
+horizontal_alignment = 2
+
+[node name="label_ground_speed" type="Label" parent="HUD" unique_id=388287036]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 359.0
+offset_right = 460.0
+offset_bottom = 382.0
+text = "GS"
+label_settings = SubResource("LabelSettings_hqtel")
+horizontal_alignment = 2
+
+[node name="label_throttle" type="Label" parent="HUD" unique_id=178417523]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 391.0
+offset_right = 428.0
+offset_bottom = 414.0
+text = "throttle"
+label_settings = SubResource("LabelSettings_hqtel")
+horizontal_alignment = 2
+
+[node name="label_alt" type="Label" parent="HUD" unique_id=2106042101]
+layout_mode = 0
+offset_left = 728.0
+offset_top = 327.0
+offset_right = 777.0
+offset_bottom = 350.0
+text = "alt"
+label_settings = SubResource("LabelSettings_hqtel")
+
+[node name="label_vspeed" type="Label" parent="HUD" unique_id=1443989122]
+layout_mode = 0
+offset_left = 728.0
+offset_top = 359.0
+offset_right = 777.0
+offset_bottom = 382.0
+text = "v/speed"
+label_settings = SubResource("LabelSettings_hqtel")
+
+[node name="crosshair" type="Label" parent="HUD" unique_id=140548011]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.5
+offset_top = -11.5
+offset_right = 4.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "x"
+
+[node name="waypoint_marker" type="Label" parent="HUD" unique_id=1940086136]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "V"
+label_settings = SubResource("LabelSettings_smehm")
+script = ExtResource("5_smehm")
+
+[node name="Mesh Pivot" type="Node3D" parent="." unique_id=1654205646]
+transform = Transform3D(-2.8428216e-08, 0, -0.6503617, 0, 0.6503617, 0, 0.6503618, 0, -2.8428213e-08, -0.00030511786, -0.66126776, 0.8598255)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh Pivot" unique_id=1755845743]
+transform = Transform3D(-7.523033e-08, -7.4948874, 1.7881693e-07, 1.7210697, -3.2761213e-07, -1.7881712e-07, 7.523034e-08, 3.2761207e-07, 4.0908575, 5.722417, 1.3048843, -2.5011832e-07)
+mesh = ExtResource("6_smehm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=99737140]
+transform = Transform3D(2.627598, 0, 0, 0, 2.627598, 0, 0, 0, 2.627598, 0.0031429632, 0.47132128, 0.63232166)
+visible = false
+shape = SubResource("BoxShape3D_xaub4")
+debug_color = Color(0.25490198, 0.63529414, 0, 1)
+
+[node name="SpeedLines" type="GPUParticles3D" parent="." unique_id=803185655]
+emitting = false
+amount = 15
+lifetime = 0.05
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_ijnfp")
+draw_pass_1 = SubResource("BoxMesh_pvgat")
+
+[node name="AeroSurfaces" type="Node3D" parent="." unique_id=1676468611]
+
+[node name="Wing" type="Node3D" parent="AeroSurfaces" unique_id=1669625477]
+transform = Transform3D(1, 0, 0, 0, 0.99956894, -0.029359177, 0, 0.029359177, 0.99956894, 0, -0.018303633, 0.16728216)
+
+[node name="LeftWing" type="Node3D" parent="AeroSurfaces/Wing" unique_id=1799171047]
+transform = Transform3D(0.9991228, 0.04187565, 0, -0.04187565, 0.9991228, 0, 0, 0, 1, -1.2916089, 0.7370398, -0.1254735)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_s2a2n")
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="RightWing" type="Node3D" parent="AeroSurfaces/Wing" unique_id=1288682970]
+transform = Transform3D(0.99912286, -0.041875653, 0, 0.041875653, 0.99912286, 0, 0, 0, 1, 1.292, 0.737, -0.125)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_s2a2n")
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="CenterWing" type="Node3D" parent="AeroSurfaces/Wing" unique_id=780218591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.69350415, -0.045396447)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_c57nm")
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="RightAileron" type="Node3D" parent="AeroSurfaces/Wing" unique_id=817474638]
+transform = Transform3D(0.9992208, -0.039469354, 0, 0.039469354, 0.9992209, 0, 0, 0, 1, 3.030087, 0.8396025, 1.0847237)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_ouh8m")
+is_control_surface = true
+input_multiplier = -0.5
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="LeftAileron" type="Node3D" parent="AeroSurfaces/Wing" unique_id=2059204443]
+transform = Transform3D(0.9991944, 0.040131792, 0, -0.040131792, 0.9991945, 0, -2.3283064e-10, 0, 1, -3.03, 0.8397, 1.0843115)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_ouh8m")
+is_control_surface = true
+input_multiplier = 0.5
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="Fuselage" type="Node3D" parent="AeroSurfaces" unique_id=1007025082]
+transform = Transform3D(-4.371139e-08, -1, 0, 0.9999789, -4.3710465e-08, 0.006500032, -0.006500032, 2.841255e-10, 0.9999789, 0, 0.03149195, -0.2473104)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_y04i4")
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="VTail" type="Node3D" parent="AeroSurfaces" unique_id=203550207]
+transform = Transform3D(-4.371139e-08, -0.99999994, 0, 1, -4.3711385e-08, 0, 0, 0, 0.99999994, 0, 0.75341713, 3.4399889)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_nid35")
+is_control_surface = true
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
+
+[node name="HTail" type="Node3D" parent="AeroSurfaces" unique_id=1872410881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15455884, 2.89478)
+script = ExtResource("3_qhqgy")
+config = SubResource("Resource_4w144")
+is_control_surface = true
+metadata/_custom_type_script = "uid://d2xlkwvcfa1mq"
