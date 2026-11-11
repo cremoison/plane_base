@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cjobk7w7dglh0"]
 
 [ext_resource type="Script" uid="uid://dkebb0xjxb8ml" path="res://scripts/aircraft_physics.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://byoem3ak0m8wi" path="res://assets/Cessna172.fbx" id="3_dqkch"]
 [ext_resource type="Script" uid="uid://pbs8h56efvxk" path="res://scripts/aircraft_camera.gd" id="3_fjrip"]
 [ext_resource type="Script" uid="uid://d2xlkwvcfa1mq" path="res://scripts/aerosurface.gd" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://bnb3pyn5767bh" path="res://scripts/player_ui.gd" id="3_tuyoq"]
 [ext_resource type="Script" uid="uid://dmg88x62eyymd" path="res://scripts/aerosurface_config.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://c2820qp15mhfs" path="res://scripts/aircraft_controller.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://b3hwqxljt7gtw" path="res://scripts/waypoint_marker.gd" id="5_smehm"]
-[ext_resource type="ArrayMesh" uid="uid://t132ik4eu1x4" path="res://assets/city-kit/OBJ format/low-detail-building-i.obj" id="6_smehm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fjrip"]
 friction = 0.2
@@ -100,7 +100,7 @@ metadata/_custom_type_script = "uid://dmg88x62eyymd"
 [sub_resource type="Resource" id="Resource_4w144"]
 script = ExtResource("4_dqkch")
 span = 2.745
-flap_fraction = 1.0
+flap_fraction = 0.5
 stall_angle_high = 0.7
 stall_angle_low = -0.7
 metadata/_custom_type_script = "uid://dmg88x62eyymd"
@@ -110,6 +110,7 @@ mass = 850.0
 physics_material_override = SubResource("PhysicsMaterial_fjrip")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 0.3, -0.15)
+inertia = Vector3(2500, 3500, 1200)
 can_sleep = false
 contact_monitor = true
 max_contacts_reported = 4
@@ -120,11 +121,11 @@ angular_damp_mode = 1
 angular_damp = 2.0
 script = ExtResource("1_g2els")
 thrust = 0.0
-base_thrust = null
-max_thrust = 191000.0
-air_density = 0.5
+base_thrust = 20000.0
+max_thrust = 45000.0
 pitch_torque = null
 _mass = 850.0
+slip_alignment_factor = 3.0
 use_substep_prediction = null
 
 [node name="Controller" type="Node" parent="." unique_id=1039497028 node_paths=PackedStringArray("aircraft_physics", "pitch_surfaces", "roll_surfaces", "yaw_surfaces")]
@@ -133,6 +134,7 @@ aircraft_physics = NodePath("..")
 pitch_surfaces = [NodePath("../AeroSurfaces/HTail")]
 roll_surfaces = [NodePath("../AeroSurfaces/Wing/RightAileron"), NodePath("../AeroSurfaces/Wing/LeftAileron")]
 yaw_surfaces = [NodePath("../AeroSurfaces/VTail")]
+throttle_step = 15000.0
 
 [node name="CameraController" type="Node3D" parent="." unique_id=1767656859 node_paths=PackedStringArray("aircraft", "speed_lines", "cameras")]
 script = ExtResource("3_fjrip")
@@ -264,9 +266,7 @@ script = ExtResource("5_smehm")
 [node name="Mesh Pivot" type="Node3D" parent="." unique_id=1654205646]
 transform = Transform3D(-2.8428216e-08, 0, -0.6503617, 0, 0.6503617, 0, 0.6503618, 0, -2.8428213e-08, -0.00030511786, -0.66126776, 0.8598255)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh Pivot" unique_id=1755845743]
-transform = Transform3D(-7.523033e-08, -7.4948874, 1.7881693e-07, 1.7210697, -3.2761213e-07, -1.7881712e-07, 7.523034e-08, 3.2761207e-07, 4.0908575, 5.722417, 1.3048843, -2.5011832e-07)
-mesh = ExtResource("6_smehm")
+[node name="Cessna172" parent="Mesh Pivot" unique_id=2147380112 instance=ExtResource("3_dqkch")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=99737140]
 transform = Transform3D(2.627598, 0, 0, 0, 2.627598, 0, 0, 0, 2.627598, 0.0031429632, 0.47132128, 0.63232166)
