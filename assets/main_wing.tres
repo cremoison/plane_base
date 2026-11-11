@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AeroSurfaceConfig" format=3 uid="uid://dtqn21825gjej"]
+
+[ext_resource type="Script" uid="uid://dmg88x62eyymd" path="res://scripts/aerosurface_config.gd" id="1_aoned"]
+
+[resource]
+script = ExtResource("1_aoned")
+metadata/_custom_type_script = "uid://dmg88x62eyymd"

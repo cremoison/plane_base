@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://ihec1rwr4mlf"]
+
+[ext_resource type="PackedScene" uid="uid://b1ot16vfvv7od" path="res://scenes/airport.tscn" id="2_36cgk"]
+[ext_resource type="Material" uid="uid://bra6ug2wjmj0j" path="res://assets/grass_shader/src/materials/grass_01/grass_ground_01.tres" id="5_8ed17"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36cgk"]
+albedo_color = Color(0.0056611504, 0.0056611514, 0.00566115, 1)
+
+[node name="departure island" type="Node3D" unique_id=216595673]
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="." unique_id=1617640444]
+use_collision = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CSGCombiner3D2" unique_id=1020242449]
+transform = Transform3D(0.79086107, 0, 0, 0, 0.79086107, 0, 0, 0, 0.79086107, 61.20867, -3.2921877, 0)
+smoothing_angle = 0.0
+use_collision = true
+
+[node name="Runway" type="CSGBox3D" parent="CSGCombiner3D2/CSGCombiner3D" unique_id=904745676]
+transform = Transform3D(3.2804327, 0, 0, 0, 3.2804327, 0, 0, 0, 3.2804327, -59.303158, 2.9722748, -13.230696)
+calculate_tangents = false
+size = Vector3(3.8962402, 0.1, 103.40851)
+material = SubResource("StandardMaterial3D_36cgk")
+
+[node name="Taxi2" type="CSGBox3D" parent="CSGCombiner3D2/CSGCombiner3D" unique_id=594028533]
+transform = Transform3D(3.2804327, 0, 0, 0, 3.2804327, 0, 0, 0, 3.2804327, -11.484535, 2.9722748, -0.9418144)
+calculate_tangents = false
+size = Vector3(3.2802734, 0.1, 62.130005)
+material = SubResource("StandardMaterial3D_36cgk")
+
+[node name="Taxi3" type="CSGBox3D" parent="CSGCombiner3D2/CSGCombiner3D" unique_id=1137443998]
+transform = Transform3D(1.9779382, 0, -2.6170592, 0, 3.2804327, 0, 2.6170592, 0, 1.9779382, -35.03605, 2.9722748, 30.395224)
+calculate_tangents = false
+size = Vector3(2.6542969, 0.1, 17.528687)
+material = SubResource("StandardMaterial3D_36cgk")
+
+[node name="Taxi6" type="CSGBox3D" parent="CSGCombiner3D2/CSGCombiner3D" unique_id=638932362]
+transform = Transform3D(-1.4339226e-07, 0, -3.2804325, 0, 3.2804327, 0, 3.2804325, 0, -1.4339226e-07, -37.55834, 2.9722748, -62.689247)
+calculate_tangents = false
+size = Vector3(2.2822266, 0.1, 15.990906)
+material = SubResource("StandardMaterial3D_36cgk")
+
+[node name="Taxi4" type="CSGBox3D" parent="CSGCombiner3D2/CSGCombiner3D" unique_id=256905799]
+transform = Transform3D(2.319616, 0, -2.3196166, 0, 3.2804327, 0, 2.3196166, 0, 2.319616, -35.83378, 2.9722748, 123.30421)
+calculate_tangents = false
+size = Vector3(3.2802734, 0.1, 22.494629)
+material = SubResource("StandardMaterial3D_36cgk")
+
+[node name="Taxi5" type="CSGBox3D" parent="CSGCombiner3D2/CSGCombiner3D" unique_id=1274480832]
+transform = Transform3D(-2.3196166, 0, -2.3196156, 0, 3.2804327, 0, 2.3196156, 0, -2.3196166, -33.606895, 2.9722748, -109.158516)
+calculate_tangents = false
+size = Vector3(3.2802734, 0.1, 20.574585)
+material = SubResource("StandardMaterial3D_36cgk")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D2" unique_id=1612481540]
+transform = Transform3D(0.79086107, 0, 0, 0, 0.79086107, 0, 0, 0, 0.79086107, -31.109192, -18.065214, -6.6279154)
+use_collision = true
+size = Vector3(364.339, 43.590515, 482.2931)
+material = ExtResource("5_8ed17")
+
+[node name="Airport" parent="." unique_id=1078853547 instance=ExtResource("2_36cgk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.32016, 2.2941854, -11.352196)

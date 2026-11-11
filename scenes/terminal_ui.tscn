@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://bau5vwkfoxjgc"]
+
+[ext_resource type="Script" uid="uid://bulxuhudfl0pc" path="res://scripts/terminal_ui.gd" id="1_bygfb"]
+
+[sub_resource type="Gradient" id="Gradient_bygfb"]
+colors = PackedColorArray(0, 0, 0.09411765, 0.78431374, 0, 0, 0.39215687, 0.78431374)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bygfb"]
+gradient = SubResource("Gradient_bygfb")
+
+[sub_resource type="Theme" id="Theme_pvgat"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xaub4"]
+font_size = 42
+
+[node name="TerminalUI" type="Control" unique_id=241089551]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bygfb")
+
+[node name="Background" type="TextureRect" parent="." unique_id=776660060]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_bygfb")
+flip_h = true
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=180678390]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_pvgat")
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=434100498]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=837221204]
+layout_mode = 2
+size_flags_vertical = 0
+text = "TERMINAL"
+label_settings = SubResource("LabelSettings_xaub4")
+
+[node name="BtnOrders" type="Button" parent="MarginContainer/VBoxContainer" unique_id=23552373]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "ORDERS
+"
+
+[node name="BtnHangar" type="Button" parent="MarginContainer/VBoxContainer" unique_id=912652821]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "HANGAR
+
+"
+
+[node name="BtnClose" type="Button" parent="MarginContainer/VBoxContainer" unique_id=10156733]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CLOSE
+"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer" unique_id=1953905151]
+layout_mode = 2
+
+[node name="OrderListPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/HSplitContainer" unique_id=1375520003]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderListPanel" unique_id=17115007]
+layout_mode = 2
+
+[node name="VBoxOrdersList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderListPanel/ScrollContainer" unique_id=727005368]
+layout_mode = 2
+
+[node name="OrderDetailsPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/HSplitContainer" unique_id=2062529608]
+layout_mode = 2
+
+[node name="VBoxDetails" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderDetailsPanel" unique_id=1700813683]
+layout_mode = 2
+offset_transform_position = Vector2(6.085, 0)
+
+[node name="LabelOrderName" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderDetailsPanel/VBoxDetails" unique_id=1195693181]
+layout_mode = 2
+text = "OrderName"
+
+[node name="LabelDestination" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderDetailsPanel/VBoxDetails" unique_id=294627015]
+layout_mode = 2
+
+[node name="LabelReward" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderDetailsPanel/VBoxDetails" unique_id=1312967086]
+layout_mode = 2
+
+[node name="BtnAcceptOrder" type="Button" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderDetailsPanel/VBoxDetails" unique_id=1746980911]
+layout_mode = 2
+text = "Accept"
+
+[node name="BtnDeliverOrder" type="Button" parent="MarginContainer/VBoxContainer/HSplitContainer/OrderDetailsPanel/VBoxDetails"]
+layout_mode = 2
+text = "Deliver"
+visible = false

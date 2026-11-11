@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dqa5vycjkst4g"]
+
+[ext_resource type="Environment" uid="uid://bgj81dw0qoghi" path="res://assets/sky_env.tres" id="1_qpcdc"]
+[ext_resource type="PackedScene" uid="uid://cjobk7w7dglh0" path="res://scenes/player.tscn" id="2_f7rs8"]
+[ext_resource type="PackedScene" uid="uid://pxrnjhwoqtbi" path="res://scenes/level_elements/updraft.tscn" id="3_f7rs8"]
+[ext_resource type="PackedScene" uid="uid://c8ds0fau8jnyc" path="res://scenes/level_elements/crosswind.tscn" id="4_3mqpg"]
+
+[node name="Main" type="Node3D" unique_id=214441365]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=611335767]
+environment = ExtResource("1_qpcdc")
+
+[node name="Player" parent="." unique_id=740888521 instance=ExtResource("2_f7rs8")]
+transform = Transform3D(1, 0, 0, 0, 0.997728, -0.067370996, 0, 0.067370996, 0.997728, 19.367016, 648.7023, 17.208479)
+linear_velocity = Vector3(0, 3.3685498, -49.8864)
+thrust = 15000.0
+
+[node name="UpdraftArea" parent="." unique_id=945502656 instance=ExtResource("3_f7rs8")]
+transform = Transform3D(66.4069, 0, 0, 0, 66.4069, 0, 0, 0, 66.4069, -98.23511, 725.4421, -477.27997)
+wind_velocity = Vector3(0, -50, 0)
+
+[node name="CrosswindArea" parent="." unique_id=2009028643 instance=ExtResource("4_3mqpg")]
+transform = Transform3D(5.2646184, 0, -31.23716, 0, 31.677694, 0, 31.23716, 0, 5.2646184, 1406.5305, 1034.0118, 441.92816)
+wind_velocity = Vector3(50, 0, 15)
