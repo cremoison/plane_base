@@ -18,6 +18,7 @@ func _process(delta):
 	var yaw_input = Input.get_axis("yaw_left", "yaw_right")
 
 	aircraft_physics.current_yaw_input = yaw_input
+	aircraft_physics.current_pitch_input = pitch_input
 
 	var speed = aircraft_physics.linear_velocity.length()
 	var speed_damping = clamp(60.0 / speed, 0.1, 1.0) if speed > 60.0 else 1.0

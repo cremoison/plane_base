@@ -6,6 +6,8 @@ class_name AircraftPhysics
 @export var base_thrust : float = 30000.0 # N, spinta a cui il throttle torna a riposo (usata da AircraftController)
 @export var max_thrust : float = 50000.0 # N
 @export var air_density : float = 1.225 # kg/m^3
+@export var pitch_torque : float = 20000.0
+var current_pitch_input : float = 0.0
 @export var is_engine_on : bool = true
 @export var _mass : float = 1000.0 # kg
 
@@ -127,6 +129,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 	state.apply_central_force(thrust_force + aero_force)
 	state.apply_torque(aero_torque)
+	state.apply_torque(global_transform.basis.x * -current_pitch_input * pitch_torque)
 
 	var current_velocity = state.linear_velocity
 	var speed = current_velocity.length()
